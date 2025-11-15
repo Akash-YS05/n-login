@@ -35,7 +35,7 @@ export async function POST(req: Request) {
   //if adding will exceed limit, return devices list to allow user to choose one to evict
   if (active.length >= maxDevices) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const list = active.map((d) => ({
+    const list = active.map((d: any) => ({
       id: d.id,
       deviceId: d.deviceId,
       userAgent: d.userAgent,
