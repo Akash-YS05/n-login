@@ -8,29 +8,37 @@ export default async function Home() {
   const user = session?.user;
 
   return (
-    <div className="app-container">
-      <div className="main-card-wrapper">
-        <img
-          src="https://cdn.auth0.com/website/auth0-logo-dark.svg"
-          alt="Auth0 Logo"
-          className="auth0-logo"
-        />
-        <h1 className="main-title">Next.js + Auth0</h1>
-        
-        <div className="action-card">
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 flex items-center justify-center p-4">
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-slate-800/20 rounded-none blur-3xl"></div>
+        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-slate-800/20 rounded-none blur-3xl"></div>
+      </div>
+
+      <div className="relative w-full max-w-md z-10">
+        <div className="text-center mb-8">
+          <h1 className="text-4xl font-light text-white tracking-tight">NLogin</h1>
+          <p className="text-slate-400 text-xs mt-3 font-light tracking-wide">Login Setup using Nextjs & Auth0</p>
+        </div>
+
+        <div className="bg-slate-900/40 backdrop-blur-md border border-slate-700/50 rounded-none p-8 shadow-2xl">
           {user ? (
-            <div className="logged-in-section">
-              <p className="logged-in-message">✅ Successfully logged in!</p>
+            <div className="space-y-6">
+              <div className="text-center">
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-slate-800/50 border border-slate-700 rounded-none">
+                  <span className="text-green-400">✓</span>
+                  <p className="text-xs font-light text-slate-300">Authenticated</p>
+                </div>
+              </div>
               <Profile />
               <LogoutButton />
             </div>
           ) : (
-            <>
-              <p className="action-text">
-                Welcome! Please log in to access your protected content.
+            <div className="space-y-4">
+              <p className="text-center text-slate-300 text-xs font-light leading-relaxed tracking-wide">
+                Log in to access your protected content securely.
               </p>
               <LoginButton />
-            </>
+            </div>
           )}
         </div>
       </div>

@@ -8,8 +8,8 @@ export default function Profile() {
 
   if (isLoading) {
     return (
-      <div className="loading-state">
-        <div className="loading-text">Loading user profile...</div>
+      <div className="text-center py-6">
+        <div className="text-xs text-slate-600 font-light">Loading user profile...</div>
       </div>
     );
   }
@@ -21,13 +21,13 @@ export default function Profile() {
   const phone = typeof window !== "undefined" ? localStorage.getItem("phone") : null;
 
   return (
-    <div className="profile-card action-card p-4">
-      <div className="flex gap-4 items-center">
-        {user.picture && <img src={user.picture} alt={user.name || "User"} className="w-16 h-16 rounded-full" />}
-        <div>
-          <h2 className="text-lg font-semibold">{user.name}</h2>
-          <p className="text-sm text-gray-600">{user.email}</p>
-          <p className="text-sm mt-1"><span className="font-medium">Phone:</span> {phone ?? "Not provided"}</p>
+    <div className="space-y-4">
+      <div className="flex gap-4 items-center bg-white p-4 rounded-none border border-slate-200">
+        {user.picture && <img src={user.picture || "/vercel.svg"} alt={user.name || "User"} className="w-12 h-12 rounded-none object-cover" />}
+        <div className="flex-1">
+          <h2 className="text-sm font-light text-slate-900">{user.name}</h2>
+          <p className="text-xs font-light text-slate-600 mt-1">{user.email}</p>
+          <p className="text-xs font-light text-slate-600 mt-1"><span className="font-medium">Phone:</span> {phone ?? "Not provided"}</p>
         </div>
       </div>
 

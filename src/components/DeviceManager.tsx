@@ -97,93 +97,89 @@ export default function DeviceManager() {
 
   if (!user) return null;
   return (
-    <div className="device-manager mt-4">
-      <div className="device-info card p-4 rounded shadow-sm">
-        <div className="flex items-center justify-between">
-          <div>
-            <div className="text-sm text-gray-500">Device ID</div>
-            <div className="font-mono text-xs">{deviceId}</div>
+    <div className="space-y-4">
+      <div className="bg-white border border-slate-200 rounded-lg p-4">
+        <div className="space-y-3">
+          <div className="flex flex-col justify-between text-sm">
+            <div>
+              <div className="text-sm text-slate-700">Device ID: <span className="text-xs">{deviceId}</span></div>
+            </div>
+            <div className="">
+              <div className="text-sm text-slate-700">Signed in as: <span className="text-xs">{user.name}</span></div>
+            </div>
           </div>
-          <div>
-            <div className="text-sm text-gray-500">Signed in as</div>
-            <div className="font-medium">{user.name}</div>
-          </div>
-        </div>
 
-        <div className="mt-3">
-          <label className="block text-sm">Phone number</label>
-          <div className="flex gap-2 mt-1">
-            <input
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              className="border px-3 py-2 rounded w-full"
-              placeholder="+91-9999999999"
-            />
-            <button onClick={savePhone} className="bg-blue-600 text-white px-3 py-2 rounded">
-              Save
-            </button>
+          <div className="border-t border-slate-100 pt-3">
+            <label className="block text-xs font-medium text-slate-700 mb-2">Phone number</label>
+            <div className="flex gap-2">
+              <input
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                className="flex-1 border border-slate-300 px-3 py-2 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-slate-400"
+                placeholder="+91-9999999999"
+              />
+              <button onClick={savePhone} className="px-4 py-2 bg-slate-900 text-white text-sm font-medium rounded-lg hover:bg-slate-800 transition-colors">
+                Save
+              </button>
+            </div>
           </div>
-        </div>
 
-        <div className="mt-3">
-          <label className="block text-sm">Device label (optional)</label>
-          <div className="flex gap-2 mt-1">
-            <input
-              value={displayName}
-              onChange={(e) => setDisplayName(e.target.value)}
-              className="border px-3 py-2 rounded w-full"
-              placeholder="My laptop / Phone"
-            />
-            <button
-              onClick={() => {
-                if (deviceId) registerDevice(deviceId, displayName);
-              }}
-              className="bg-green-600 text-white px-3 py-2 rounded"
-            >
-              Update
-            </button>
+          <div>
+            <label className="block text-xs font-medium text-slate-700 mb-2">Device label (optional)</label>
+            <div className="flex gap-2">
+              <input
+                value={displayName}
+                onChange={(e) => setDisplayName(e.target.value)}
+                className="flex-1 border border-slate-300 px-3 py-2 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-slate-400"
+                placeholder="My laptop / Phone"
+              />
+              <button
+                onClick={() => {
+                  if (deviceId) registerDevice(deviceId, displayName);
+                }}
+                className="px-4 py-2 bg-slate-900 text-white text-sm font-medium rounded-lg hover:bg-slate-800 transition-colors"
+              >
+                Update
+              </button>
+            </div>
           </div>
         </div>
       </div>
 
       {showChooser && (
-        <div className="evict-panel mt-4 card p-4 rounded shadow-sm bg-white">
-          <h3 className="font-semibold mb-2">Maximum devices reached</h3>
-          <p className="text-sm text-gray-600 mb-3">
+        <div className="bg-white border border-slate-200 rounded-lg p-4">
+          <h3 className="font-semibold text-slate-900 mb-2">Maximum devices reached</h3>
+          <p className="text-sm text-slate-600 mb-4">
             You have reached the allowed device limit. Choose a device to sign out, or cancel to abort login.
           </p>
 
-          <ul className="space-y-2">
+          <ul className="space-y-2 mb-4">
             {devices.map((d) => (
-              <li key={d.id} className="flex items-center justify-between border p-2 rounded">
+              <li key={d.id} className="flex items-center justify-between border border-slate-200 p-3 rounded-lg">
                 <div>
-                  <div className="font-medium">{d.displayName ?? d.userAgent ?? "Unknown device"}</div>
-                  <div className="text-xs text-gray-500">Created: {new Date(d.createdAt || "").toLocaleString()}</div>
-                  <div className="text-xs text-gray-400">deviceId: {d.deviceId}</div>
+                  <div className="font-medium text-slate-900">{d.displayName ?? d.userAgent ?? "Unknown device"}</div>
+                  <div className="text-xs text-slate-500">Created: {new Date(d.createdAt || "").toLocaleString()}</div>
+                  <div className="text-xs text-slate-400">deviceId: {d.deviceId}</div>
                 </div>
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => evictAndRegister(d.deviceId)}
-                    className="bg-red-600 text-white px-3 py-1 rounded"
-                  >
-                    Sign out this device
-                  </button>
-                </div>
+                <button
+                  onClick={() => evictAndRegister(d.deviceId)}
+                  className="px-3 py-1 bg-slate-900 text-white text-xs font-medium rounded-lg hover:bg-slate-800 transition-colors"
+                >
+                  Sign out
+                </button>
               </li>
             ))}
           </ul>
 
-          <div className="mt-3">
-            <button
-              onClick={() => {
-                setCookie("deviceId", "", -1);
-                window.location.href = "/";
-              }}
-              className="px-4 py-2 border rounded"
-            >
-              Cancel login
-            </button>
-          </div>
+          <button
+            onClick={() => {
+              setCookie("deviceId", "", -1);
+              window.location.href = "/";
+            }}
+            className="w-full px-4 py-2 border border-slate-300 text-slate-900 text-sm font-medium rounded-lg hover:bg-slate-50 transition-colors"
+          >
+            Cancel login
+          </button>
         </div>
       )}
     </div>
